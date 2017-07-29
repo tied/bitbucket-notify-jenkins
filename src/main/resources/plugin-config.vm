@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>Notify Jenkins</title>
+    <meta name="decorator" content="atl.admin">
+    $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+    $webResourceManager.requireResource("com.mastercard.bitbucket-notify-jenkins:notify-jenkins-resources")
+    $webResourceManager.requireResource("com.atlassian.auiplugin:aui-flag")
+    $webResourceManager.requireResource("com.atlassian.auiplugin:aui-inline-dialog2")
+
+</head>
+<body>
+<div class="aui-page-header-main">
+    <h2>Notify Jenkins</h2>
+</div>
+
+<form id="admin" class="aui top-label" style="display:none">
+    <h3>Jenkins Instances</h3>
+    <p>Use the table below to configure each Jenkins instance you want to make available to project & repository
+        administrators when they configure the hook.</p>
+
+    <table id="jenkinsInstances" class="aui" style="display:none">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <p>
+        <a class="aui-button" data-aui-trigger aria-controls="add-jenkins" id="dialog-trigger">
+            Add Jenkins Instance
+        </a>
+    </p>
+
+    <h3>Repository Url Template</h3>
+    <p>
+        Use the following field to configure the pattern that will be used to build the repo URL that is sent to jenkins
+        for
+        each individual repository. This URL must exactly match the URL that was used in Jenkins to clone the
+        repository.
+        The following parameters are available for use and will be substituted prior to the URL being sent to Jenkins:
+        <strong>{{PROJECT_KEY}}</strong> and <strong>{{REPO_SLUG}}</strong>
+    </p>
+
+    <div class="field-group">
+        <label for="d-fname">URL Pattern<span class="aui-icon icon-required"> required</span></label>
+        <input class="text long-field" type="text" id="repoUrlPattern" name="repoUrlPattern" title="Repo URL Pattern">
+        <div class="description">The pattern of the Repository Clone URL</div>
+    </div>
+
+    <div class="buttons-container">
+        <div class="buttons">
+            <input class="aui-button aui-button-primary" type="submit" id="submit" name="submit" value="Save"
+                   accesskey="s">
+            <a id="cancel" class="aui-button aui-button-link cancel" name="cancel" accesskey="c" href="/admin"
+               autocomplete="off" tabindex="0">Cancel</a>
+        </div>
+    </div>
+</form>
+
+<!-- Render the dialog -->
+<section role="dialog" id="jenkins-dialog" class="aui-layer aui-dialog2 aui-dialog2-medium" aria-hidden="true">
+    <header class="aui-dialog2-header">
+        <h2 class="aui-dialog2-header-main">Add Jenkins Instance</h2>
+        <!-- Close icon -->
+        <a class="aui-dialog2-header-close">
+            <span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>
+        </a>
+    </header>
+    <div class="aui-dialog2-content">
+        <form class="aui top-label">
+            <div class="field-group">
+                <label for="addJenkinsCode">Code<span class="aui-icon icon-required"> required</span></label>
+                <input class="text" type="text" id="addJenkinsCode" name="addJenkinsCode" title="Jenkins Code">
+                <div class="description">A unique code assigned to this Jenkins instance</div>
+            </div>
+            <div class="field-group">
+                <label for="addJenkinsName">Display Name<span class="aui-icon icon-required"> required</span></label>
+                <input class="text" type="text" id="addJenkinsName" name="addJenkinsName" title="Jenkins Display Name">
+                <div class="description">The name that will be displayed to Repo Admins when selecting the Jenkins
+                    instance to notify
+                </div>
+            </div>
+            <div class="field-group">
+                <label for="addJenkinsUrl">URL<span class="aui-icon icon-required"> required</span></label>
+                <input class="text long-field" type="text" id="addJenkinsUrl" name="addJenkinsUrl" title="Jenkins URL">
+                <div class="description">The URL of the Jenkins instance</div>
+            </div>
+        </form>
+    </div>
+
+    <footer class="aui-dialog2-footer">
+        <div class="aui-dialog2-footer-actions">
+            <button id="dialog-ok-button" class="aui-button aui-button-primary">OK</button>
+            <button id="dialog-close-button" class="aui-button aui-button-link">Close</button>
+        </div>
+    </footer>
+</section>
+
+</body>
+</html>

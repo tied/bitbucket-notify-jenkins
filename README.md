@@ -9,11 +9,11 @@ A Bitbucket Server plugin that notifies Jenkins when source code changes.
 
 ## Jenkins
 - Jenkins 2
-- Git Plugin
+- Git Plugin / Bitbucket Branch Source Plugin
 
 ## Motivation
 Jenkins provides the ability to poll Bitbucket for changes. This leads to inefficiencies when the 
-build must occur quickly after the repository change. A better approach is for Bitbucket to send 
+build must occur quickly after a repository change. A better approach is for Bitbucket to send 
 notifications to Jenkins as repository changes occur.
 
 There are other plugins that provide similar functionality. However, this plugin is different
@@ -21,11 +21,11 @@ in the following ways:
 
 - Geared towards larger corporate environments that have stricter policies and controls
   - limit the URLs that Bitbucket can communicate with
-  - ensure the use of canonical clone URLs   
+  - ensure the use of canonical clone URLs that may differ from the configured Bitbucket Root URL 
 - Focus on simple and correct configuration
   - minimize user configuration/setup
   - support infrastructure automation through a configuration API and/or bitbucket.properties
-- Intention to support multiple Jenkins notification schemes
+- Support multiple Jenkins notification schemes
   - Support Jenkins [Git Plugin](https://wiki.jenkins.io/display/JENKINS/Git+Plugin)
   - Support Jenkins [Bitbucket Branch Source plugin](https://wiki.jenkins.io/display/JENKINS/Bitbucket+Branch+Source+Plugin) 
 
@@ -40,23 +40,14 @@ Administrators can maintain a template for clone URLs across all repositories. S
 notify Jenkins require knowledge of the EXACT clone URL configured within Jenkins. Because there 
 may be different ways to access a repository, it can be helpful to standardize on a URL scheme. 
 
-### Event Triggers
-Repository administrators can select individual events that should trigger notifications. The supported 
-events are:
-
-- Branch Created
-- Branch Deleted
-- File Edit (from Bitbucket User Interface)
-- Pull Request Merged
-- Repository Push
-
 ### API
 Provides an API to configure plugin and repository data. This can especially be useful
 for establishing seed data during infrastructure automation.
 
 ## Notification Mechanics
-The Notify Jenkins plugin requires the target Jenkins instance to have the [Git Plugin](https://wiki.jenkins.io/display/JENKINS/Git+Plugin) installed. 
+The Notify Jenkins plugin supports the following Jenkins plugins:
 
+### [Git Plugin](https://wiki.jenkins.io/display/JENKINS/Git+Plugin) 
 The Jenkins Git plugin exposes an endpoint allowing unauthenticated requests to `https://jenkins/git/notifyCommit?url=<Clone URL of the Git repository>`. 
 Upon receiving a request, Jenkins will trigger polling on any job configured with a Git clone 
 URL matching the URL supplied in the request query string. If Jenkins polling subsequently finds changes,
@@ -82,24 +73,26 @@ Then the clone URL used in the notification will be:
 https://mybitbucket/scm/MY_PROJECT/MY_REPO.git
 ```
 
+### [Bitbucket Branch Source plugin](https://wiki.jenkins.io/display/JENKINS/Bitbucket+Branch+Source+Plugin) 
+The Bitbucket Branch Source plugin exposes an endpoint allowing unauthenticated requests to `https://jenkins/bitbucket-scmsource-hook/notify`.
+The request body will contain details pertaining to the PR and Ref that was changed. The Bitbucket Branch Source plugin
+will use these details to determine which branches/pull requests need building.
+
 ## Usage
 
 ## Admin Setup
-Once installed, the Bitbucket administrator must configure one or more Jenkins instances and a clone template URL. This can be
+Once installed, the Bitbucket administrator must configure one or more Jenkins instances and a clone URL template. This can be
 done by navigating to `Administration` and selecting `Notify Jenkins` from the `Settings` menu. The configured
-instances will then be available for selection by the user when configuring a repository. 
+instances will then be available for selection by a repository administrator when configuring a repository. 
 
 ## Repository Setup
 To enable for a repository:
 
 1. Navigate to `Repository Settings` -> `Notify Jenkins`
-2. Check the `Status` checkbox
+2. Check the `Enabled` checkbox
 3. Select the `Jenkins Instance` to notify
-4. Click `Save`
-
-*Optional Settings*
-- Select Specific Triggers
-
+4. Select the target Jenkins plugin (Git or Bitbucket Branch Source)
+5. Click `Save`
 
 ## API
 This plugin extends the Bitbucket API by exposing the following resources:
@@ -187,7 +180,6 @@ PUT https://mybitbucket/rest/notify-jenkins/1.0/config
 ##### Response
 Returns HTTP 204 (No Content) on success.
 
-
 ### Repository Configuration
 Repository Configuration data that determines how to process notifications for the repository.
 
@@ -208,11 +200,7 @@ GET https://mybitbucket/rest/notify-jenkins/1.0/MY_PROJECT/MY_REPO/config
 {
     "active": true,
     "jenkinsInstance": "PROD",
-    "triggerRepoPush": true,
-    "triggerBranchCreated": true,
-    "triggerBranchDeleted": true,
-    "triggerFileEdit": false,
-    "triggerPRMerged": true
+    "jenkinsTargetPlugin": "GIT"
 }
 ```
 
@@ -231,16 +219,22 @@ PUT https://mybitbucket/rest/notify-jenkins/1.0/MY_PROJECT/MY_REPO/config
 {
     "active": true,
     "jenkinsInstance": "PROD",
-    "triggerRepoPush": true,
-    "triggerBranchCreated": true,
-    "triggerBranchDeleted": true,
-    "triggerFileEdit": false,
-    "triggerPRMerged": true
+    "jenkinsTargetPlugin": true
 }
 ```
 
 ##### Response
 Returns HTTP 204 (No Content) on success.
+
+## Limitations
+
+* Possible issue with Bitbucket Branch Source when source and target Branches are named the same.
+
+## Acknowledgments
+This plugin was inspired by the following projects:
+
+* [bitbucket-webhooks-plugin](https://github.com/Eernie/bitbucket-webhooks-plugin/wiki)
+* [Webhook to Jenkins for Bitbucket](https://marketplace.atlassian.com/plugins/com.nerdwin15.stash-stash-webhook-jenkins/server/overview)
 
 ## File Configuration
 

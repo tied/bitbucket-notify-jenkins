@@ -21,34 +21,26 @@ public class RepositoryConfigService {
         this.entityManager = entityManager;
     }
 
-    public RepositoryConfigEntity getConfig(int repoId) {
-        return this.entityManager.get(RepositoryConfigEntity.class, repoId);
+    public RepositoryConfigEntity getConfig(int repositoryId) {
+        return this.entityManager.get(RepositoryConfigEntity.class, repositoryId);
     }
 
-    public RepositoryConfigEntity createConfig(int repoId, RepositoryConfigDTO repoConfig) {
+    public RepositoryConfigEntity createConfig(int repositoryId, RepositoryConfigDTO repoConfig) {
         return entityManager.create(
                 RepositoryConfigEntity.class,
-                new DBParam("ID", repoId),
+                new DBParam("ID", repositoryId),
                 new DBParam("JENKINS_KEY", repoConfig.getJenkinsInstance()),
                 new DBParam("ACTIVE", repoConfig.isActive()),
-                new DBParam("TRIGGER_REPO_PUSH", repoConfig.isTriggerRepoPush()),
-                new DBParam("TRIGGER_BRANCH_CREATED", repoConfig.isTriggerBranchCreated()),
-                new DBParam("TRIGGER_BRANCH_DELETED", repoConfig.isTriggerBranchDeleted()),
-                new DBParam("TRIGGER_FILE_EDIT", repoConfig.isTriggerFileEdit()),
-                new DBParam("TRIGGER_PR_MERGED", repoConfig.isTriggerPRMerged()));
+                new DBParam("TARGET_PLUGIN", repoConfig.getJenkinsTargetPlugin()));
     }
 
-    public RepositoryConfigEntity updateConfig(int repoId, RepositoryConfigDTO repoConfig) {
-        RepositoryConfigEntity config = getConfig(repoId);
+    public RepositoryConfigEntity updateConfig(int repositoryId, RepositoryConfigDTO repoConfig) {
+        RepositoryConfigEntity config = getConfig(repositoryId);
 
         if (config != null) {
             config.setIsActive(repoConfig.isActive());
             config.setJenkinsKey(repoConfig.getJenkinsInstance());
-            config.setIsTriggerOnBranchCreated(repoConfig.isTriggerBranchCreated());
-            config.setIsTriggerOnBranchDeleted(repoConfig.isTriggerBranchDeleted());
-            config.setIsTriggerOnFileEdit(repoConfig.isTriggerFileEdit());
-            config.setIsTriggerOnRepoPush(repoConfig.isTriggerRepoPush());
-            config.setIsTriggerOnPullRequestMerge(repoConfig.isTriggerPRMerged());
+            config.setJenkinsTargetPlugin(repoConfig.getJenkinsTargetPlugin());
             config.save();
         }
 

@@ -22,18 +22,7 @@ public final class RepositoryConfigDTO {
     private String jenkinsInstance;
 
     @XmlElement
-    private boolean triggerRepoPush;
+    private String jenkinsTargetPlugin;
 
-    @XmlElement
-    private boolean triggerBranchCreated;
-
-    @XmlElement
-    private boolean triggerBranchDeleted;
-
-    @XmlElement
-    private boolean triggerFileEdit;
-
-    @XmlElement
-    private boolean triggerPRMerged;
 }
 

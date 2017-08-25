@@ -59,9 +59,13 @@ public class PluginConfig {
     }
 
     public URL buildRepoUrl(String projectKey, String repoSlug) throws MalformedURLException {
-        return new URL(getRepoUrlPattern()
+        return new URL(buildRepoUrlString(projectKey, repoSlug));
+    }
+
+    public String buildRepoUrlString(String projectKey, String repoSlug) {
+        return getRepoUrlPattern()
                 .replace("{{PROJECT_KEY}}", projectKey)
-                .replace("{{REPO_SLUG}}", repoSlug));
+                .replace("{{REPO_SLUG}}", repoSlug);
     }
 }
 

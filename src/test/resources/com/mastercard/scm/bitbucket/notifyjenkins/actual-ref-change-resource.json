@@ -1,0 +1,34 @@
+{
+  "repository" : {
+    "scmId" : "git",
+    "slug" : "jenkins-project3",
+    "project" : {
+      "key" : "TEST",
+      "name" : "test"
+    },
+    "links" : {
+      "self" : [ {
+        "href" : "http://ech-10-24-130-210:7990/stash/scm/TEST/jenkins-project3.git"
+      } ]
+    },
+    "public" : true
+  },
+  "push" : {
+    "changes" : [ {
+      "created" : false,
+      "closed" : false,
+      "old" : {
+        "name" : "master",
+        "target" : {
+          "hash" : "7acea690f93c6bebad2da449f26117ae77e2aae6"
+        }
+      },
+      "new" : {
+        "name" : "master",
+        "target" : {
+          "hash" : "1bcba9ffac5d375a0027da0bc3705cf3a6a1b447"
+        }
+      }
+    } ]
+  }
+}

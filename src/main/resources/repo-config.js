@@ -44,11 +44,12 @@
     function saveData() {
       repoConfigData.active = $('#active').is(':checked');
       repoConfigData.jenkinsInstance = $('#jenkinsInstance').val();
-      repoConfigData.triggerRepoPush = $('#triggerRepoPush').is(':checked');
-      repoConfigData.triggerBranchCreated = $('#triggerBranchCreated').is(':checked');
-      repoConfigData.triggerBranchDeleted = $('#triggerBranchDeleted').is(':checked');
-      repoConfigData.triggerFileEdit = $('#triggerFileEdit').is(':checked');
-      repoConfigData.triggerPRMerged = $('#triggerPRMerged').is(':checked');
+
+      if ($("#targetPluginBranchSource").is(':checked')) {
+        repoConfigData.jenkinsTargetPlugin = "BRANCH_SOURCE";
+      } else {
+        repoConfigData.jenkinsTargetPlugin = "GIT";
+      }
 
       $.ajax({
         url: repoConfigUrl,
@@ -79,17 +80,15 @@
     }
 
     function render() {
-      renderJenkinsInstances();
+      var isBranchSource = repoConfigData.jenkinsTargetPlugin == "BRANCH_SOURCE";
 
+      $("#targetPluginGit").prop("checked", !isBranchSource);
+      $("#targetPluginBranchSource").prop("checked", isBranchSource);
       $('#active').prop('checked', repoConfigData.active);
       $('#cloneUrl').text(getCloneUrl());
-      $('#triggerRepoPush').prop('checked', repoConfigData.triggerRepoPush);
-      $('#triggerBranchCreated').prop('checked', repoConfigData.triggerBranchCreated);
-      $('#triggerBranchDeleted').prop('checked', repoConfigData.triggerBranchDeleted);
-      $('#triggerFileEdit').prop('checked', repoConfigData.triggerFileEdit);
-      $('#triggerPRMerged').prop('checked', repoConfigData.triggerPRMerged);
-
       $('#pluginConfigForm').show();
+
+      renderJenkinsInstances();
     }
 
     function renderJenkinsInstances() {
@@ -102,7 +101,11 @@
         )
       });
 
-      $select.val(repoConfigData.jenkinsInstance);
+      if (pluginConfigData.instances.length == 1) {
+        $select.val($('#jenkinsInstance option:first').val());
+      } else {
+        $select.val(repoConfigData.jenkinsInstance);
+      }
     }
 
   });

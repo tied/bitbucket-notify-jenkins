@@ -23,7 +23,7 @@ import java.util.ArrayList;
 @Component
 public class PluginConfigService {
 
-    private static final Logger log = LoggerFactory.getLogger(JenkinsClient.class);
+    private static final Logger log = LoggerFactory.getLogger(PluginConfigService.class);
 
     private static final String PLUGIN_PREFIX = "plugin.";
     private static final String KEY_PREFIX = "com.mastercard.scm.bitbucket.notifyjenkins.";

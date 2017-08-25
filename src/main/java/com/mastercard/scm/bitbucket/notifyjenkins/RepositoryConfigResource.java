@@ -25,12 +25,12 @@ import java.util.List;
 import static org.apache.http.HttpStatus.SC_UNPROCESSABLE_ENTITY;
 
 /**
- *  Exposes HTTP endpoint allowing Javascript clients to post and read plugin settings.
+ * Exposes HTTP endpoint allowing Javascript clients to post and read plugin settings.
  */
 @Path("/{project}/{repo}/config")
 public class RepositoryConfigResource {
 
-    private static final Logger log = LoggerFactory.getLogger(JenkinsClient.class);
+    private static final Logger log = LoggerFactory.getLogger(RepositoryConfigResource.class);
 
     @ComponentImport
     private final PermissionService permissionService;
@@ -79,11 +79,7 @@ public class RepositoryConfigResource {
             RepositoryConfigDTO config = new RepositoryConfigDTO();
             config.setActive(entity.isActive());
             config.setJenkinsInstance(entity.getJenkinsKey());
-            config.setTriggerBranchCreated(entity.isTriggerOnBranchCreated());
-            config.setTriggerBranchDeleted(entity.isTriggerOnBranchDeleted());
-            config.setTriggerFileEdit(entity.isTriggerOnFileEdit());
-            config.setTriggerPRMerged(entity.isTriggerOnPullRequestMerge());
-            config.setTriggerRepoPush(entity.isTriggerOnRepoPush());
+            config.setJenkinsTargetPlugin(entity.getJenkinsTargetPlugin());
             return Response.ok(config).build();
         }
     }
@@ -114,13 +110,7 @@ public class RepositoryConfigResource {
     }
 
     private RepositoryConfigDTO getDefaultRepoConfig() {
-        RepositoryConfigDTO config = new RepositoryConfigDTO();
-        config.setTriggerFileEdit(true);
-        config.setTriggerPRMerged(true);
-        config.setTriggerRepoPush(true);
-        config.setTriggerBranchDeleted(true);
-        config.setTriggerBranchCreated(true);
-        return config;
+        return new RepositoryConfigDTO();
     }
 
     private List<String> validate(RepositoryConfigDTO config) {

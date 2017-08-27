@@ -174,6 +174,8 @@ public class JenkinsClientTest {
 
     private String getResourceText(String resourceName) throws URISyntaxException, IOException {
         URL url = this.getClass().getResource("/com/mastercard/scm/bitbucket/notifyjenkins/" + resourceName);
-        return IOUtils.toString(url.toURI(), Charset.forName("utf-8"));
+        String fileContent = IOUtils.toString(url.toURI(), Charset.forName("utf-8"));
+        // convert line endings to current OS line endings
+        return fileContent.replace("\r\n", System.getProperty("line.separator"));
     }
 }

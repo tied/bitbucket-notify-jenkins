@@ -16,11 +16,9 @@
 
 <form id="pluginConfigForm" class="aui" style="display:none">
     <fieldset class="group">
-        <legend><span>Status</span></legend>
         <div class="checkbox">
             <input class="checkbox" type="checkbox" name="active" id="active">
-            <label for="active">Active</label>
-            <div class="description">Inactive will not trigger notifications</div>
+            <label for="active">Enabled</label>
         </div>
     </fieldset>
 
@@ -28,43 +26,34 @@
     <div class="field-group">
         <label for="jenkinsInstance">Jenkins Instance</label>
         <select class="select" id="jenkinsInstance" name="jenkinsInstance" title="Jenkins Instances">
-            <option>Production</option>
+            <option></option>
         </select>
         <div class="description">Select the Jenkins instance to notify</div>
     </div>
+
+    <fieldset class="group">
+        <legend><span>Jenkins Plugin</span></legend>
+        <div class="radio">
+            <input class="radio" type="radio" checked="checked"
+                   name="targetPlugin" id="targetPluginGit">
+            <label for="targetPluginGit">Git</label>
+        </div>
+        <div class="radio">
+            <input class="radio" type="radio"
+                   name="targetPlugin" id="targetPluginBranchSource">
+            <label for="targetPluginBranchSource">Bitbucket Branch Source</label>
+            <div class="description">Select this option when using a Multibranch Pipeline with a Bitbucket branch source.</div>
+        </div>
+    </fieldset>
 
     <div class="field-group">
         <label for="cloneUrl">Repo Clone Url</label>
         <strong><span id="cloneUrl" ></span></strong>
         <div class="description">
             <p>Your Jenkins job must use this exact URL when cloning.</p>
-            <p>Additionally, you must enable the 'Poll SCM' trigger.</p>
+            <p>Additionally, you must enable the 'Poll SCM' trigger when using the 'Git' plugin.</p>
         </div>
     </div>
-
-    <fieldset class="group">
-        <legend><span>Triggers</span></legend>
-        <div class="checkbox">
-            <input class="checkbox" type="checkbox" name="triggerBranchCreated" id="triggerBranchCreated">
-            <label for="triggerBranchCreated">Branch Created</label>
-        </div>
-        <div class="checkbox">
-            <input class="checkbox" type="checkbox" name="triggerBranchDeleted" id="triggerBranchDeleted">
-            <label for="triggerBranchDeleted">Branch Deleted</label>
-        </div>
-        <div class="checkbox">
-            <input class="checkbox" type="checkbox" name="triggerFileEdit" id="triggerFileEdit">
-            <label for="triggerFileEdit">File Edit</label>
-        </div>
-        <div class="checkbox">
-            <input class="checkbox" type="checkbox" name="triggerPRMerged" id="triggerPRMerged">
-            <label for="triggerPRMerged">Pull Request Merged</label>
-        </div>
-        <div class="checkbox">
-            <input class="checkbox" type="checkbox" name="triggerRepoPush" id="triggerRepoPush">
-            <label for="triggerRepoPush">Repository Push</label>
-        </div>
-    </fieldset>
 
     <div class="buttons-container">
         <div class="buttons">

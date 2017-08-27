@@ -25,6 +25,7 @@ import java.net.URI;
 public class PluginConfigServlet extends HttpServlet {
 
     public static final String TEMPLATE_NAME = "plugin-config.vm";
+    public static final String CONTENT_TYPE = "text/html;charset=utf-8";
     @ComponentImport
     private final UserManager userManager;
 
@@ -49,7 +50,7 @@ public class PluginConfigServlet extends HttpServlet {
             return;
         }
 
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType(CONTENT_TYPE);
         renderer.render(TEMPLATE_NAME, response.getWriter());
     }
 

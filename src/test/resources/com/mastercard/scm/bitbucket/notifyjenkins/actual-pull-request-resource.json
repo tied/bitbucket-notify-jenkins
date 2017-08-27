@@ -1,0 +1,95 @@
+{
+  "actor" : {
+    "username" : "admin",
+    "displayName" : "Bitbucket Admin"
+  },
+  "repository" : {
+    "scmId" : "git",
+    "slug" : "jenkins-project3",
+    "fullName" : "TEST/jenkins-project3",
+    "ownerName" : "TEST",
+    "project" : {
+      "key" : "TEST",
+      "name" : "test"
+    },
+    "owner" : {
+      "username" : "TEST",
+      "displayName" : "TEST"
+    },
+    "links" : {
+      "self" : [ {
+        "href" : "http://ech-10-24-130-210:7990/stash/scm/TEST/jenkins-project3.git"
+      } ]
+    },
+    "public" : true
+  },
+  "pullrequest" : {
+    "id" : "82",
+    "title" : "b.txt edited online with Bitbucket",
+    "authorLogin" : "Bitbucket Admin",
+    "fromRef" : {
+      "repository" : {
+        "scmId" : "git",
+        "slug" : "final_fork",
+        "fullName" : "~ADMIN/final_fork",
+        "ownerName" : "~ADMIN",
+        "project" : {
+          "key" : "~ADMIN",
+          "name" : "~ADMIN"
+        },
+        "owner" : {
+          "username" : "~ADMIN",
+          "displayName" : "Bitbucket Admin"
+        },
+        "links" : {
+          "self" : [ {
+            "href" : "http://ech-10-24-130-210:7990/stash/scm/~ADMIN/final_fork.git"
+          } ]
+        },
+        "public" : false
+      },
+      "branch" : {
+        "rawNode" : "21b46b4fbb85de2f4fe2f96c7ffe7a2a6791ba52",
+        "name" : "final_fork_branch"
+      },
+      "commit" : {
+        "hash" : "21b46b4fbb85de2f4fe2f96c7ffe7a2a6791ba52",
+        "message" : null,
+        "date" : null,
+        "authorTimestamp" : 0
+      }
+    },
+    "toRef" : {
+      "repository" : {
+        "scmId" : "git",
+        "slug" : "jenkins-project3",
+        "fullName" : "TEST/jenkins-project3",
+        "ownerName" : "TEST",
+        "project" : {
+          "key" : "TEST",
+          "name" : "test"
+        },
+        "owner" : {
+          "username" : "TEST",
+          "displayName" : "TEST"
+        },
+        "links" : {
+          "self" : [ {
+            "href" : "http://ech-10-24-130-210:7990/stash/scm/TEST/jenkins-project3.git"
+          } ]
+        },
+        "public" : true
+      },
+      "branch" : {
+        "rawNode" : "1bcba9ffac5d375a0027da0bc3705cf3a6a1b447",
+        "name" : "master"
+      },
+      "commit" : {
+        "hash" : "1bcba9ffac5d375a0027da0bc3705cf3a6a1b447",
+        "message" : null,
+        "date" : null,
+        "authorTimestamp" : 0
+      }
+    }
+  }
+}

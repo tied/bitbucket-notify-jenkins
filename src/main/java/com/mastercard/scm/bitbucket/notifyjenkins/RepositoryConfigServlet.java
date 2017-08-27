@@ -29,7 +29,7 @@ import java.io.IOException;
 @Component
 public class RepositoryConfigServlet extends HttpServlet {
 
-    private static final Logger log = LoggerFactory.getLogger(JenkinsClient.class);
+    private static final Logger log = LoggerFactory.getLogger(RepositoryConfigServlet.class);
     public static final String TEMPLATE_NAME = "repo-config.vm";
 
     @ComponentImport

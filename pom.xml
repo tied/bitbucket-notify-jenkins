@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mastercard</groupId>
     <artifactId>bitbucket-notify-jenkins</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <organization>
         <name>Mastercard</name>
         <url>https://developer.mastercard.com</url>

@@ -1,5 +1,8 @@
 # bitbucket-notify-jenkins - Change Log
 
+## 1.0.2
+Add license and copyright headers in preparation for open sourcing
+
 ## 1.0.1
 Fix issue in which test fails on Linux because of line endings
 

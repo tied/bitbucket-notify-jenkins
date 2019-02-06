@@ -1,5 +1,8 @@
 # bitbucket-notify-jenkins - Change Log
 
+## 1.0.3
+Rid maven builds of platform-dependent file encoding warnings
+
 ## 1.0.2
 Add license and copyright headers in preparation for open sourcing
 

@@ -23,3 +23,10 @@ hs_err_pid*
 target/*
 .idea/*
 *.iml
+
+# VSCode files and dirs
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/
